@@ -6,6 +6,7 @@ import com.teknofest.turizm.response.AuthenticationResponse;
 import com.teknofest.turizm.service.PlaceService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -77,6 +78,17 @@ public class  PlaceController {
         var response = new ApiResponse.Builder<List<Place>>()
                 .success(true)
                 .message("Kayıt getirildi.")
+                .data(result)
+                .build();
+        return ResponseEntity.status(HttpStatus.OK).body(response);
+    }
+    @PreAuthorize("hasRole('ADMIN')")
+    @GetMapping("/false")
+    public ResponseEntity<ApiResponse<List<Place>>> findAllApprovedPlaces() {
+        var result = placeService.findAllApprovedPlaces();
+        var response = new ApiResponse.Builder<List<Place>>()
+                .success(true)
+                .message("Kayıtlar getirildi.")
                 .data(result)
                 .build();
         return ResponseEntity.status(HttpStatus.OK).body(response);

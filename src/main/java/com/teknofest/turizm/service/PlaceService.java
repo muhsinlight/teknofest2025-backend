@@ -12,6 +12,7 @@ public interface PlaceService {
      Place updatePlace(Long id,Place uPlace);
      void  deletePlace(Long id);
      List<Place> searchByCityOrRegionOrAddress(String query);
+     List<Place> findAllApprovedPlaces();
 
 
 
